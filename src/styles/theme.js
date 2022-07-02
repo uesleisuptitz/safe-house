@@ -21,9 +21,10 @@ export const GlobalStyle = createGlobalStyle`
     }
   
     html,
-    body {
+    body, #root {
       background-color: ${THEME.colors.bgDark};
       color: ${THEME.colors.text};
+      height: 100%;
     }
   
     @media (max-width: 1088px) {

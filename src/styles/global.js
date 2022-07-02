@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const Container = styled.div`
-  height: 100vh;
+  height: 100%;
   padding: 0 0.5rem;
   display: flex;
   flex-direction: column;
@@ -10,8 +10,8 @@ const Container = styled.div`
 `;
 
 const Main = styled.main`
-  padding: 5rem 0;
-  flex: 1;
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;

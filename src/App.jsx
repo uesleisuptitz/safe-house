@@ -1,6 +1,6 @@
 import { ThemeProvider } from "styled-components";
 import { Routes, Route } from "react-router-dom";
-import { Home } from "./screens";
+import { Home, NewRoom } from "./screens";
 import { GlobalStyle, THEME } from "./styles/theme";
 
 export default function App() {
@@ -10,6 +10,7 @@ export default function App() {
       <ThemeProvider theme={THEME}>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/new-room" element={<NewRoom />} />
           <Route path="*" element={<h1>404</h1>} />
         </Routes>
       </ThemeProvider>

@@ -1,5 +1,5 @@
 import { ButtonLink, Header, Title } from "../../components";
-import * as s from "./style";
+import * as s from "../../styles/global";
 
 const Home = () => {
   return (
@@ -8,8 +8,8 @@ const Home = () => {
       <s.Main>
         <Title />
         <s.Grid>
-          <ButtonLink href="/salas">Buscar sala</ButtonLink>
-          <ButtonLink href="/nova-sala">Criar uma sala</ButtonLink>
+          <ButtonLink href="/rooms">Buscar sala</ButtonLink>
+          <ButtonLink href="/new-room">Criar uma sala</ButtonLink>
         </s.Grid>
       </s.Main>
     </s.Container>
