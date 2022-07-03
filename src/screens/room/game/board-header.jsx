@@ -7,7 +7,7 @@ const BoardHeader = ({ myUserId, room, roomId }) => {
   let { turn = {}, users = {} } = room;
 
   const handleWinGame = useCallback(
-    () => firebaseWinGame(roomId, myUserId),
+    () => firebaseWinGame(roomId, users[myUserId].username),
     [roomId, myUserId]
   );
 
