@@ -42,21 +42,14 @@ const STATUS = {
   FINISHED: "finished", //jogo encerrado
 };
 
-const ACTION = {
-  ROLL_INIT: {
-    action: "roll_init", //Role o dado para começar
-  },
-  ROLL: {
-    action: "roll", //Role os dados para movimentar
-  },
+const ACTIONS = {
+  ROLL_INIT: "roll_init", //Role o dado para começar
+  ROLL: "roll", //Role os dados para movimentar
 };
 
-const ACTIONS = [
-  {
-    userId: "1", //id usuário || 'all_users' = todos usuários || 'game' = jogo
-    ...ACTION.ROLL_INIT,
-  },
-];
+const TURN = {
+  ALL_USERS: "all_users", //Todos usuários
+};
 
 const ZOMBIES = [
   {
@@ -101,17 +94,11 @@ const ZOMBIES = [
   },
 ];
 
-const MODEL = {
-  maxUsers: 2,
-  name: "Nome da sala",
-  owner: "Nome do dono da sala",
-  status: STATUS.WAITING,
-};
-
 export const GAME = {
-  MODEL,
   STATUS,
   ZOMBIES,
+  ACTIONS,
+  TURN,
 };
 
 const GAME_EXAMPLE = {
@@ -126,5 +113,10 @@ const GAME_EXAMPLE = {
     },
   },
   zombies: ZOMBIES,
-  actions: ACTIONS,
+  actions: [
+    {
+      userId: "1", //id usuário || 'all_users' = todos usuários || 'game' = jogo,
+      action: ACTIONS.ROLL_INIT,
+    },
+  ],
 };

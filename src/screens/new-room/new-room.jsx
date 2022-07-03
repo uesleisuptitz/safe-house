@@ -9,8 +9,7 @@ import { getUniqueId } from "../../utils";
 const NewRoom = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  let localUsername =
-    typeof window !== "undefined" && localStorage.getItem("username");
+  let localUsername = localStorage.getItem("username");
 
   const handleCreateRoom = useCallback(async (e) => {
     e.preventDefault();
@@ -28,7 +27,9 @@ const NewRoom = () => {
       };
       if (password) room.password = password;
       const uid = getUniqueId();
-      firebaseCreateRoom(uid, room, () => navigate(`sala?id=${uid}`))
+      firebaseCreateRoom(uid, room, () =>
+        navigate(`/room/${uid}`, { replace: true })
+      )
         .catch((error) => {
           console.log(`CATCH`, error);
           alert("Ocorreu um erro ao tentar criar sua sala!");
