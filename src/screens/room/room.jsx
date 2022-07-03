@@ -6,6 +6,7 @@ import { Button, Header, Title, User } from "../../components";
 import {
   firebaseEnterTheRoom,
   firebaseExitTheRoom,
+  firebaseGameRulesStart,
   firebaseStartGame,
 } from "../../services";
 import * as s from "../../styles/global";
@@ -15,8 +16,6 @@ import Game from "./game";
 const db = firebase.database();
 
 const Room = () => {
-  // const dispatch = useDispatch();
-  // const room = useSelector((state) => state.room);
   const navigate = useNavigate();
 
   const [room, setRoom] = useState({});
@@ -53,7 +52,7 @@ const Room = () => {
         navigate("/");
       }
     });
-    // gameRulesStart(roomId, userId);
+    if (roomId === userId) firebaseGameRulesStart(roomId);
   }, []);
 
   const exitTheGame = useCallback(() => {
