@@ -31,41 +31,43 @@ const Room = () => {
     : [];
   let already = users.length === room.maxUsers;
 
-  const enterTheGame = useCallback((roomId) => {
-    let userId = getUniqueId();
-    setMyUserId(userId);
-    if (userId === roomId) setOwner(true);
-    firebaseEnterTheRoom(roomId, userId, localUsername).catch((error) => {
-      console.log(`CATCH`, error);
-      alert("Ocorreu um erro ao tentar entrar na sala!");
-    });
-    listenTheGame(roomId, userId);
-  }, []);
+  const listenTheGame = useCallback(
+    (roomId, userId) => {
+      var roomRef = db.ref(`rooms/${roomId}`);
+      roomRef.on("value", (data) => {
+        let roomData = data.val();
+        if (roomData) setRoom({ ...roomData, roomId });
+        else {
+          alert("Conexão perdida!");
+          navigate("/");
+        }
+      });
+      if (roomId === userId) firebaseGameRulesStart(roomId);
+    },
+    [navigate]
+  );
 
-  const listenTheGame = useCallback((roomId, userId) => {
-    var roomRef = db.ref(`rooms/${roomId}`);
-    roomRef.on("value", (data) => {
-      let roomData = data.val();
-      if (roomData) setRoom({ ...roomData, roomId });
-      else {
-        alert("Conexão perdida!");
-        navigate("/");
-      }
-    });
-    if (roomId === userId) firebaseGameRulesStart(roomId);
-  }, []);
+  const enterTheGame = useCallback(
+    (roomId) => {
+      let userId = getUniqueId();
+      setMyUserId(userId);
+      if (userId === roomId) setOwner(true);
+      firebaseEnterTheRoom(roomId, userId, localUsername).catch((error) => {
+        console.log(`CATCH`, error);
+        alert("Ocorreu um erro ao tentar entrar na sala!");
+      });
+      listenTheGame(roomId, userId);
+    },
+    [listenTheGame, localUsername]
+  );
 
   const exitTheGame = useCallback(() => {
     firebaseExitTheRoom(id, myUserId).then(() => navigate("/"));
-  }, [id, myUserId]);
-
-  const handleStartGame = useCallback(() => {
-    firebaseStartGame(id);
-  }, [id]);
+  }, [id, myUserId, navigate]);
 
   useEffect(() => {
     if (id) enterTheGame(id);
-  }, [id]);
+  }, [id, enterTheGame]);
 
   return (
     <s.Container>
@@ -108,7 +110,7 @@ const Room = () => {
               ))}
           </div>
           {owner && (
-            <Button disabled={!already} onClick={handleStartGame}>
+            <Button disabled={!already} onClick={() => firebaseStartGame(id)}>
               Começar!
             </Button>
           )}

@@ -21,7 +21,7 @@ const Room = ({
       if (informedPassword === password) navigate(`/room/${id}`);
       else alert("Senha incorreta");
     } else navigate(`/room/${id}`);
-  }, [id]);
+  }, [id, navigate, password]);
 
   let disabled = Object.entries(users).length === maxUsers;
 

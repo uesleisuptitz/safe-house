@@ -20,7 +20,7 @@ const UserRolls = ({ myUserId, room, roomId }) => {
         setRollValue(rollDice())
       );
     }, rollingTime);
-  }, [myUserId, rollValue]);
+  }, [roomId, myUserId, rollValue, rollingTime]);
 
   const rollNormalDice = useCallback(() => {
     setTimeout(() => {
@@ -28,7 +28,7 @@ const UserRolls = ({ myUserId, room, roomId }) => {
         setRollValue(rollDice())
       );
     }, rollingTime);
-  }, [myUserId, rollValue]);
+  }, [roomId, rollValue, rollingTime]);
 
   if (turn?.userId === GAME.TURN.ALL_USERS && !myUser?.initRollValue) {
     return (

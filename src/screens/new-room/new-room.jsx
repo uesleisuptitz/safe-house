@@ -11,32 +11,35 @@ const NewRoom = () => {
   const [loading, setLoading] = useState(false);
   let localUsername = localStorage.getItem("username");
 
-  const handleCreateRoom = useCallback(async (e) => {
-    e.preventDefault();
-    const formData = new FormData(e.target);
-    const { password, password2, name } = Object.fromEntries(formData);
-    if (password && password !== password2)
-      alert("A duas senhas informadas não são iguais!");
-    else {
-      setLoading(true);
-      let room = {
-        maxUsers: 2,
-        name,
-        owner: localUsername,
-        status: "waiting",
-      };
-      if (password) room.password = password;
-      const uid = getUniqueId();
-      firebaseCreateRoom(uid, room, () =>
-        navigate(`/room/${uid}`, { replace: true })
-      )
-        .catch((error) => {
-          console.log(`CATCH`, error);
-          alert("Ocorreu um erro ao tentar criar sua sala!");
-        })
-        .finally(() => setLoading(false));
-    }
-  });
+  const handleCreateRoom = useCallback(
+    async (e) => {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const { password, password2, name } = Object.fromEntries(formData);
+      if (password && password !== password2)
+        alert("A duas senhas informadas não são iguais!");
+      else {
+        setLoading(true);
+        let room = {
+          maxUsers: 2,
+          name,
+          owner: localUsername,
+          status: "waiting",
+        };
+        if (password) room.password = password;
+        const uid = getUniqueId();
+        firebaseCreateRoom(uid, room, () =>
+          navigate(`/room/${uid}`, { replace: true })
+        )
+          .catch((error) => {
+            console.log(`CATCH`, error);
+            alert("Ocorreu um erro ao tentar criar sua sala!");
+          })
+          .finally(() => setLoading(false));
+      }
+    },
+    [localUsername, navigate]
+  );
 
   return (
     <s.Container>

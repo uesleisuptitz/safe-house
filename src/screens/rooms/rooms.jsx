@@ -23,7 +23,7 @@ const Rooms = () => {
         ]);
       }
     });
-  });
+  }, []);
 
   const listenRoomsChanged = useCallback(() => {
     db.ref(`rooms/`).on("child_changed", (data) => {
@@ -40,22 +40,22 @@ const Rooms = () => {
         );
       }
     });
-  });
+  }, []);
 
-  const listenRoomsRemoved = () => {
+  const listenRoomsRemoved = useCallback(() => {
     db.ref(`rooms/`).on("child_removed", (data) => {
       if (data?.val())
         setRooms((roomsList) =>
           roomsList.filter((room) => room.id !== data.key)
         );
     });
-  };
+  }, []);
 
   useEffect(() => {
     listenRoomsAdded();
     listenRoomsChanged();
     listenRoomsRemoved();
-  }, []);
+  }, [listenRoomsAdded, listenRoomsChanged, listenRoomsRemoved]);
 
   return (
     <s.Container>

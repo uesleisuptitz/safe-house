@@ -103,7 +103,7 @@ export const GAME = {
   TURN,
 };
 
-const GAME_EXAMPLE = {
+export const GAME_EXAMPLE = {
   maxUsers: 2,
   name: "Nome da sala",
   owner: "Nome do dono da sala",

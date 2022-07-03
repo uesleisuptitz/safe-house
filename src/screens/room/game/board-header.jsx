@@ -8,7 +8,7 @@ const BoardHeader = ({ myUserId, room, roomId }) => {
 
   const handleWinGame = useCallback(
     () => firebaseWinGame(roomId, users[myUserId].username),
-    [roomId, myUserId]
+    [roomId, myUserId, users]
   );
 
   const renderWin = () => {
