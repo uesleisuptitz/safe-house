@@ -5,7 +5,7 @@ import Title from "./title/title";
 import Header from "./header/header";
 import User from "./user/user";
 import Modal from "./modal/modal";
-import CardRoom from "./room/room";
+import CardRoom from "./card-room/card-room";
 import RequestUsername from "./request-username/request-username";
 
 export {

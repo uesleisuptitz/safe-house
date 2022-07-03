@@ -34,6 +34,7 @@ export const firebaseEnterTheRoom = (roomId, userId, username) => {
     }
   });
 };
+
 export const firebaseStartGame = (roomId) => {
   return new Promise((resolve, reject) => {
     try {
@@ -45,6 +46,22 @@ export const firebaseStartGame = (roomId) => {
           action: GAME.ACTIONS.ROLL_INIT,
         },
       });
+      resolve();
+    } catch (e) {
+      console.log(e);
+      reject(e);
+    }
+  });
+};
+
+export const firebaseExitTheRoom = (roomId, userId) => {
+  return new Promise((resolve, reject) => {
+    try {
+      let myUser = db.ref(`rooms/${roomId}/users/${userId}`);
+      myUser.remove();
+      if (roomId === userId) {
+        db.ref(`rooms/${roomId}`).remove();
+      }
       resolve();
     } catch (e) {
       console.log(e);

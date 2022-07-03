@@ -3,7 +3,11 @@ import { useNavigate, useParams } from "react-router-dom";
 import firebase from "firebase/app";
 import "firebase/database";
 import { Button, Header, Title, User } from "../../components";
-import { firebaseEnterTheRoom, firebaseStartGame } from "../../services";
+import {
+  firebaseEnterTheRoom,
+  firebaseExitTheRoom,
+  firebaseStartGame,
+} from "../../services";
 import * as s from "../../styles/global";
 import { getUniqueId } from "../../utils";
 
@@ -19,6 +23,13 @@ const Room = () => {
   const [myUserId, setMyUserId] = useState(false);
   let { id } = useParams();
   let localUsername = localStorage.getItem("username");
+  let users = room?.users
+    ? Object.entries(room.users).map((array) => ({
+        id: array[0],
+        ...array[1],
+      }))
+    : [];
+  let already = users.length === room.maxUsers;
 
   const enterTheGame = useCallback((roomId) => {
     let userId = getUniqueId();
@@ -37,30 +48,24 @@ const Room = () => {
       let roomData = data.val();
       if (roomData) setRoom({ ...roomData, roomId });
       else {
-        if (roomData?.name) {
-          if (roomId !== userId) alert("Dono da sala saiu!");
-        } else alert("Sala não encontrada!");
+        alert("Conexão perdida!");
+        navigate("/");
       }
     });
     // gameRulesStart(roomId, userId);
   }, []);
 
-  useEffect(() => {
-    if (id) enterTheGame(id);
-  }, [id]);
+  const exitTheGame = useCallback(() => {
+    firebaseExitTheRoom(id, myUserId).then(() => navigate("/"));
+  }, [id, myUserId]);
 
   const handleStartGame = useCallback(() => {
     firebaseStartGame(id);
   }, [id]);
 
-  let users = room?.users
-    ? Object.entries(room.users).map((array) => ({
-        id: array[0],
-        ...array[1],
-      }))
-    : [];
-
-  let already = users.length === room.maxUsers;
+  useEffect(() => {
+    if (id) enterTheGame(id);
+  }, [id]);
 
   return (
     <s.Container>
@@ -111,7 +116,7 @@ const Room = () => {
             </Button>
           )}
           <Button
-            onClick={() => navigate("/")}
+            onClick={exitTheGame}
             size="small"
             style={{ marginTop: "40px" }}
           >
