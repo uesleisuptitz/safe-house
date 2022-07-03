@@ -1,7 +1,7 @@
 import "./firebase";
 import firebase from "firebase/app";
 import "firebase/database";
-import { GAME } from "../utils";
+import { GAME, getNextLineBoardId } from "../utils";
 
 const db = firebase.database();
 
@@ -90,6 +90,47 @@ export const firebaseRollNormalDice = (roomId, rollValue) => {
         action: GAME.ACTIONS.MOVE,
         avaliableMoviments: rollValue,
       });
+      resolve();
+    } catch (e) {
+      console.log(e);
+      reject(e);
+    }
+  });
+};
+export const firebaseWinGame = (roomId, userWinner) => {
+  return new Promise((resolve, reject) => {
+    try {
+      var roomRef = db.ref(`rooms/${roomId}`);
+      roomRef.update({ status: GAME.STATUS.FINISHED, userWinner });
+      setTimeout(() => {
+        roomRef.remove();
+      }, 5000);
+      resolve();
+    } catch (e) {
+      console.log(e);
+      reject(e);
+    }
+  });
+};
+export const firebasePlayerMove = (roomId, userId, lineId, cellIndex) => {
+  return new Promise((resolve, reject) => {
+    try {
+      var turnRef = db.ref(`rooms/${roomId}/turn`);
+      let userRef = db.ref(`rooms/${roomId}/users/${userId}`);
+      let nextLineId = getNextLineBoardId(lineId);
+      let newAvaliableCells = [
+        lineId + (cellIndex - 1),
+        lineId + (cellIndex + 1),
+      ];
+      if (nextLineId) newAvaliableCells.push(nextLineId + cellIndex);
+      else if (!nextLineId && lineId === "a")
+        newAvaliableCells.push(GAME.ACTIONS.WIN);
+      turnRef.update({
+        action: GAME.ACTIONS.MOVE,
+        avaliableMoviments: firebase.database.ServerValue.increment(-1),
+        avaliableCells: newAvaliableCells,
+      });
+      userRef.update({ position: lineId + cellIndex });
       resolve();
     } catch (e) {
       console.log(e);

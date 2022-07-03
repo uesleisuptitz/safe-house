@@ -1,21 +1,21 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useCallback } from "react";
 import styled from "styled-components";
-import { roomActions } from "../../store";
-import { BOARD } from "../../utils";
+import { firebasePlayerMove } from "../../../services";
+import { GAME, BOARD } from "../../../utils";
 import BoardHeader from "./board-header";
 
-const Board = ({ myUserId }) => {
-  const dispatch = useDispatch();
-  const room = useSelector((state) => state.room);
+const Board = ({ myUserId, room, roomId }) => {
   let { zombies = [], turn = {}, users = {} } = room;
   let players = Object.entries(users).map((array) => ({
     id: array[0],
     ...array[1],
   }));
 
-  const playerMove = (lineId, cellIndex) => {
-    dispatch(roomActions.movePlayer(room.roomId, myUserId, lineId, cellIndex));
-  };
+  const playerMove = useCallback(
+    (lineId, cellIndex) =>
+      firebasePlayerMove(roomId, myUserId, lineId, cellIndex),
+    [roomId, myUserId]
+  );
 
   const renderCell = (lineId, cellIndex) => {
     let cellId = lineId + cellIndex;
@@ -40,7 +40,7 @@ const Board = ({ myUserId }) => {
       });
     if (
       myUserId === turn?.userId &&
-      turn?.action === "move" &&
+      turn?.action === GAME.ACTIONS.MOVE &&
       turn?.avaliableMoviments > 0
     ) {
       if (avaliableCells.includes(cellId)) {
@@ -67,7 +67,7 @@ const Board = ({ myUserId }) => {
 
   return (
     <>
-      <BoardHeader myUserId={myUserId} />
+      <BoardHeader myUserId={myUserId} roomId={roomId} room={room} />
       <StyledBoard>
         <tbody>
           {Object.entries(BOARD).map((line) => (

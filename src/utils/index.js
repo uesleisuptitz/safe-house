@@ -45,7 +45,8 @@ const STATUS = {
 const ACTIONS = {
   ROLL_INIT: "roll_init", //Role o dado para começar
   ROLL: "roll", //Role os dados para movimentar
-  MOVE: "move", //Movimentar o token
+  MOVE: "move", //Movimentar o token,
+  WIN: "win",
 };
 
 const TURN = {
