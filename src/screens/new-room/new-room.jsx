@@ -2,13 +2,11 @@ import { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { Button, Title, Input, Header } from "../../components";
+import { firebaseCreateRoom } from "../../services";
 import * as s from "../../styles/global";
 import { getUniqueId } from "../../utils";
-// import { useDispatch } from "react-redux";
-// import { roomActions } from "../store";
 
 const NewRoom = () => {
-  // const dispatch = useDispatch();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   let localUsername =
@@ -21,25 +19,21 @@ const NewRoom = () => {
     if (password && password !== password2)
       alert("A duas senhas informadas não são iguais!");
     else {
-      // setLoading(true);
-      // let room = {
-      //   maxUsers: 2,
-      //   name,
-      //   owner: localUsername,
-      //   status: "waiting",
-      // };
-      // if (password) room.password = password;
-      // const uid = getUniqueId();
-      // try {
-      //   dispatch(
-      //     roomActions.createRoom(uid, room, () => navigate(`sala?id=${uid}`))
-      //   );
-      //   setLoading(false);
-      // } catch (error) {
-      //   console.log(`error`, error);
-      //   setLoading(false);
-      //   // alert("Ocorreu um erro ao tentar criar sua sala!");
-      // }
+      setLoading(true);
+      let room = {
+        maxUsers: 2,
+        name,
+        owner: localUsername,
+        status: "waiting",
+      };
+      if (password) room.password = password;
+      const uid = getUniqueId();
+      firebaseCreateRoom(uid, room, () => navigate(`sala?id=${uid}`))
+        .catch((error) => {
+          console.log(`CATCH`, error);
+          alert("Ocorreu um erro ao tentar criar sua sala!");
+        })
+        .finally(() => setLoading(false));
     }
   });
 
