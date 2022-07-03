@@ -69,3 +69,31 @@ export const firebaseExitTheRoom = (roomId, userId) => {
     }
   });
 };
+
+export const firebaseRollInitialDice = (roomId, userId, rollValue) => {
+  return new Promise((resolve, reject) => {
+    try {
+      let userRef = db.ref(`rooms/${roomId}/users/${userId}`);
+      userRef.update({ initRollValue: rollValue });
+      resolve();
+    } catch (e) {
+      console.log(e);
+      reject(e);
+    }
+  });
+};
+export const firebaseRollNormalDice = (roomId, rollValue) => {
+  return new Promise((resolve, reject) => {
+    try {
+      var turnRef = db.ref(`rooms/${roomId}/turn`);
+      turnRef.update({
+        action: GAME.ACTIONS.MOVE,
+        avaliableMoviments: rollValue,
+      });
+      resolve();
+    } catch (e) {
+      console.log(e);
+      reject(e);
+    }
+  });
+};

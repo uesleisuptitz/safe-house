@@ -10,6 +10,7 @@ import {
 } from "../../services";
 import * as s from "../../styles/global";
 import { getUniqueId } from "../../utils";
+import Game from "./game";
 
 const db = firebase.database();
 
@@ -71,11 +72,8 @@ const Room = () => {
     <s.Container>
       <Header />
       {room.status === "playing" ? (
-        <div>
-          <h1>GAME</h1>
-        </div>
-      ) : // <Game myUserId={myUserId} />
-      room.status === "finished" ? (
+        <Game myUserId={myUserId} room={room} roomId={id} />
+      ) : room.status === "finished" ? (
         <s.Main>
           <Title legend={`Vencedor: ${room?.userWinner}`} title={room.name} />
           <div>
