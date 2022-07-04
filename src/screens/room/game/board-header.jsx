@@ -1,6 +1,6 @@
+import React, { useCallback } from "react";
 import { Button } from "../../../components";
 import { GAME } from "../../../utils";
-import { useCallback } from "react";
 import { firebaseWinGame } from "../../../services/game.service";
 
 const BoardHeader = ({ myUserId, room, roomId }) => {

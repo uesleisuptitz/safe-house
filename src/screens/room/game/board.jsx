@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import React, { useCallback } from "react";
 import styled from "styled-components";
 import { firebasePlayerMove } from "../../../services";
 import { GAME, BOARD } from "../../../utils";

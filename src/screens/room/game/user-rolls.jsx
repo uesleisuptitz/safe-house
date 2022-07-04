@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import React, { useCallback, useState } from "react";
 import styled from "styled-components";
 import Dice from "react-dice-roll";
 import { Modal } from "../../../components";

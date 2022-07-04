@@ -1,3 +1,4 @@
+import React from "react";
 import { ButtonLink, Header, Title } from "../../components";
 import * as s from "../../styles/global";
 

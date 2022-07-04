@@ -1,3 +1,4 @@
+import React from "react";
 import Board from "./board";
 import UserRolls from "./user-rolls";
 
