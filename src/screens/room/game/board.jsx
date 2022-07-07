@@ -99,8 +99,8 @@ const StyledBoard = styled.table`
     @media (min-width: 720px) {
       width: 80px;
       max-width: 80px;
-      height: 60px;
-      max-height: 60px;
+      height: 7.5vh;
+      max-height: 7.5vh;
     }
   }
 `;
