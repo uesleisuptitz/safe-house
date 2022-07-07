@@ -96,13 +96,6 @@ const ZOMBIES = [
   },
 ];
 
-export const GAME = {
-  STATUS,
-  ZOMBIES,
-  ACTIONS,
-  TURN,
-};
-
 export const GAME_EXAMPLE = {
   maxUsers: 2,
   name: "Nome da sala",
@@ -121,4 +114,55 @@ export const GAME_EXAMPLE = {
       action: ACTIONS.ROLL_INIT,
     },
   ],
+};
+
+const CARDS_TYPES = {
+  HEAL: "heal", // Curar
+  STORE: "store", // Armazenar
+  GUN: "gun", // Lutar
+  VEHICLE: "vehicle", // Movimentar
+  TOOL: "tool", // Ferramenta para lidar com algo
+};
+
+const CARDS_ACTIONS = {
+  MEELE_ATTACK: "melee-attack", // Atacar corpo-a-corpo
+  HEAL: "heal", // Curar
+  UPGRADE: "upgrade", // Melhorar
+  OPEN_CHEST: "open-chest", // Abrir caixas
+};
+
+const ITEMS = {
+  MEDICINE: {
+    name: "Bandagens",
+    description:
+      "Algumas bandagens que podem ser utilizadas para estancar sangramentos e machucados.",
+    type: CARDS_TYPES.HEAL,
+    cardAction: CARDS_ACTIONS.HEAL,
+  },
+  BAG: {
+    name: "Mochila",
+    description:
+      "Uma mochila que serve para você conseguir carregar mais um item.",
+    type: CARDS_TYPES.STORE,
+    cardAction: CARDS_ACTIONS.UPGRADE,
+  },
+  CROWBAR: {
+    name: "Pé de cabra",
+    description:
+      "Serve para abrir as caixas espalhadas pelo mapa, mas sem fazer barulho.",
+    type: CARDS_TYPES.TOOL,
+    cardAction: CARDS_ACTIONS.OPEN_CHEST,
+  },
+};
+
+export const CARDS = { ITEMS };
+
+export const GAME = {
+  STATUS,
+  ZOMBIES,
+  ACTIONS,
+  TURN,
+  CARDS,
+  CARDS_TYPES,
+  CARDS_ACTIONS,
 };
