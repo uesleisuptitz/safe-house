@@ -265,10 +265,93 @@ const COLD_WEAPONS = {
     cardAction: CARDS_ACTIONS.MEELE_ATTACK,
     soundPenalty: false,
   },
+  AXE: {
+    key: "axe",
+    name: "Machado",
+    description:
+      "Um machado normalmente utilizado para cortar lenha ou árvores pequenas.",
+    normalValue: 3,
+    specialValue: 0,
+    type: CARDS_TYPES.GUN,
+    cardAction: CARDS_ACTIONS.MEELE_ATTACK,
+    soundPenalty: false,
+  },
+  MECHETE: {
+    key: "machete",
+    name: "Facão",
+    description:
+      "Faca de mato grande, utilizada em acampamentos, caça, pesca, e por militares",
+    normalValue: 2,
+    specialValue: 0,
+    type: CARDS_TYPES.GUN,
+    cardAction: CARDS_ACTIONS.MEELE_ATTACK,
+    soundPenalty: false,
+  },
   // @todo terminar a lista de itens, armas, etc.
 };
 
-export const CARDS = { ITEMS, FIRE_GUNS };
+const VEHICLES = {
+  MOTORCYCLE: {
+    key: "motorcycle",
+    name: "Motocicleta",
+    description: "Veículo motorizado de duas rodas e tração traseira.",
+    type: CARDS_TYPES.VEHICLE,
+    cardAction: CARDS_ACTIONS.MOVEMENT,
+    value: 4,
+    specialValue: 2,
+    duo: true,
+    soundPenalty: true,
+  },
+  BIKE: {
+    key: "bike",
+    name: "Bicicleta",
+    description: "Veículo não motorizado de duas rodas com pedais.",
+    type: CARDS_TYPES.VEHICLE,
+    cardAction: CARDS_ACTIONS.MOVEMENT,
+    value: 5,
+    specialValue: 2,
+    duo: false,
+    soundPenalty: true,
+  },
+  BUGGY: {
+    key: "buggy",
+    name: "Buggy",
+    description:
+      "Veículo automotor pequeno, sem portas, com pneus grandes atrás e pequenos na frente.",
+    type: CARDS_TYPES.VEHICLE,
+    cardAction: CARDS_ACTIONS.MOVEMENT,
+    value: 5,
+    specialValue: 3,
+    duo: true,
+    soundPenalty: true,
+  },
+  TRACTOR: {
+    key: "tractor",
+    name: "Trator",
+    description:
+      "Veículo grande usado para puxar, transportar ou rebocar objetos pesados.",
+    type: CARDS_TYPES.VEHICLE,
+    cardAction: CARDS_ACTIONS.MOVEMENT,
+    value: 3,
+    specialValue: 5,
+    duo: false,
+    soundPenalty: true,
+  },
+  PICKUP: {
+    key: "pickup",
+    name: "Pickup",
+    description:
+      "Veículo com cabine fechada e uma área de carga aberta com laterais baixas e porta traseira.",
+    type: CARDS_TYPES.VEHICLE,
+    cardAction: CARDS_ACTIONS.MOVEMENT,
+    value: 4,
+    specialValue: 4,
+    duo: false,
+    soundPenalty: true,
+  },
+};
+
+export const CARDS = { ITEMS, FIRE_GUNS, COLD_WEAPONS, VEHICLES };
 
 export const GAME = {
   STATUS,
