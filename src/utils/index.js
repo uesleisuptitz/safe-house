@@ -122,17 +122,21 @@ const CARDS_TYPES = {
   GUN: "gun", // Lutar
   VEHICLE: "vehicle", // Movimentar
   TOOL: "tool", // Ferramenta para lidar com algo
+  CONSUMABLE: "consumable", // Consumível, uso único
 };
 
 const CARDS_ACTIONS = {
   MEELE_ATTACK: "melee-attack", // Atacar corpo-a-corpo
+  GUN_ATTACK: "gun-attack", // Atacar com arma de fogo
   HEAL: "heal", // Curar
   UPGRADE: "upgrade", // Melhorar
   OPEN_CHEST: "open-chest", // Abrir caixas
+  MOVEMENT: "movement", //Movimentar
 };
 
 const ITEMS = {
   MEDICINE: {
+    key: "medicine",
     name: "Bandagens",
     description:
       "Algumas bandagens que podem ser utilizadas para estancar sangramentos e machucados.",
@@ -140,6 +144,7 @@ const ITEMS = {
     cardAction: CARDS_ACTIONS.HEAL,
   },
   BAG: {
+    key: "bag",
     name: "Mochila",
     description:
       "Uma mochila que serve para você conseguir carregar mais um item.",
@@ -147,15 +152,123 @@ const ITEMS = {
     cardAction: CARDS_ACTIONS.UPGRADE,
   },
   CROWBAR: {
+    key: "crowbar",
     name: "Pé de cabra",
     description:
       "Serve para abrir as caixas espalhadas pelo mapa, mas sem fazer barulho.",
     type: CARDS_TYPES.TOOL,
     cardAction: CARDS_ACTIONS.OPEN_CHEST,
   },
+  MAP: {
+    key: "map",
+    name: "Mapa",
+    description:
+      "O mapa mostra alguns esconderijos. Use-o para evitar um ataque de zumbi. Obs: Não pode ser utilizado na horda!",
+    type: CARDS_TYPES.CONSUMABLE,
+    cardAction: CARDS_ACTIONS.MOVEMENT,
+  },
+  WALKIE_TALKIE: {
+    key: "walkie-talkie",
+    name: "Walkie Talkie",
+    description:
+      "Se mais alguém tiver como te ouvir, quem estiver mais próximo da casa pode ajudar o outro!",
+    type: CARDS_TYPES.CONSUMABLE,
+    cardAction: CARDS_ACTIONS.MOVEMENT,
+  },
 };
 
-export const CARDS = { ITEMS };
+const FIRE_GUNS = {
+  PISTOL: {
+    key: "pistol",
+    name: "Pistola",
+    description:
+      "Arma de fogo leve e de cano curto. Pequena e de rápido manuseio.",
+    normalValue: 2,
+    specialValue: 0,
+    type: CARDS_TYPES.GUN,
+    cardAction: CARDS_ACTIONS.GUN_ATTACK,
+    soundPenalty: true,
+  },
+  RIFLE: {
+    key: "rifle",
+    name: "Rifle",
+    description:
+      "Fuzil de serviço padrão dos Estados Unidos utilizado durante a Segunda Guerra Mundial.",
+    normalValue: 5,
+    specialValue: 3,
+    type: CARDS_TYPES.GUN,
+    cardAction: CARDS_ACTIONS.GUN_ATTACK,
+    soundPenalty: true,
+  },
+  MACHINE_GUN: {
+    key: "machine-gun",
+    name: "Metraladora",
+    description:
+      "Arma de fogo automática que dispara tiros rapidamente a partir de um cinto de munição.",
+    normalValue: 4,
+    specialValue: 2,
+    type: CARDS_TYPES.GUN,
+    cardAction: CARDS_ACTIONS.GUN_ATTACK,
+    soundPenalty: true,
+  },
+  SHOTGUN: {
+    key: "shotgun",
+    name: "Escopeta",
+    description: "Espingarda normalmente utilizada para caça.",
+    normalValue: 3,
+    specialValue: 1,
+    type: CARDS_TYPES.GUN,
+    cardAction: CARDS_ACTIONS.GUN_ATTACK,
+    soundPenalty: true,
+  },
+};
+
+const COLD_WEAPONS = {
+  CHAINSAW: {
+    key: "chainsaw",
+    name: "Motossera",
+    description:
+      "Serra utilizada para corte de madeira, podas e corte de árvores.",
+    normalValue: 2,
+    specialValue: 0,
+    type: CARDS_TYPES.GUN,
+    cardAction: CARDS_ACTIONS.MEELE_ATTACK,
+    soundPenalty: false,
+  },
+  KNIFE: {
+    key: "knife",
+    name: "Faca de sobrevivência",
+    description: "Faca destinada à sobrevivência em ambientes selvagens.",
+    normalValue: 2,
+    specialValue: 0,
+    type: CARDS_TYPES.GUN,
+    cardAction: CARDS_ACTIONS.MEELE_ATTACK,
+    soundPenalty: false,
+  },
+  SHOVEL: {
+    key: "shovel",
+    name: "Pá",
+    description: "Pá comum. Normalmente utilizada para cavar buracos.",
+    normalValue: 2,
+    specialValue: 0,
+    type: CARDS_TYPES.GUN,
+    cardAction: CARDS_ACTIONS.MEELE_ATTACK,
+    soundPenalty: false,
+  },
+  BAT: {
+    key: "bat",
+    name: "Taco de baseball",
+    description: "Taco de madeira utilizado para jogar baseball.",
+    normalValue: 2,
+    specialValue: 0,
+    type: CARDS_TYPES.GUN,
+    cardAction: CARDS_ACTIONS.MEELE_ATTACK,
+    soundPenalty: false,
+  },
+  // @todo terminar a lista de itens, armas, etc.
+};
+
+export const CARDS = { ITEMS, FIRE_GUNS };
 
 export const GAME = {
   STATUS,
