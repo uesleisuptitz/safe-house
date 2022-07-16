@@ -43,10 +43,40 @@ const STATUS = {
 };
 
 const ACTIONS = {
-  ROLL_INIT: "roll_init", //Role o dado para começar
+  ROLL_INIT: "roll-init", //Role o dado para começar
   ROLL: "roll", //Role os dados para movimentar
   MOVE: "move", //Movimentar o token,
   WIN: "win",
+};
+
+const TURN_STAGES = {
+  // ----------------------------------------------------------------
+  ROLL_INIT: "roll-init", //Esperando rolagens iniciais
+  // ----------------------------------------------------------------
+  GET_INITIAL_CARDS: "get-initial-cards", // Distribuindo cartas iniciais
+  // ----------------------------------------------------------------
+  MOVE_ROLL: "move-roll", //Aguardando rolagem de um player para se mover
+  // ----------------------------------------------------------------
+  MOVE: "move", //Aguardando um player se mover
+  VEHICLE_MOVE: "vehicle-move", //Aguardando player se mover com um veículo
+  VEHICLE_INVITE: "vehicle-invite", //Aguardando player responder convite para entrar no veículo
+  FIGHT: "fight-roll", //Aguardando rolagem de ataque
+  OPEN_CHEST: "open-chest", //Aguardando rolagem para abrir uma caixa
+  GET_CHEST_CARD: "get-chest-card", //Aguardando uma carta ser recebida da caixa
+  ENTER_TENT: "enter-tent", //Aguardando rolagem para entrar na tenda
+  GET_TENT_CARD: "get-tent-card", //Aguardando uma carta ser recebida da tenda
+  // ---------------------------------------------------------------
+  ZOMBIE_TURN: "zombie-turn", // Verificando players próximos de zumbis
+  ZOMBIE_FIGHT: "zombie-fight", // Aguardando zumbis atacarem players próximos
+  // ---------------------------------------------------------------
+  HORDE_TURN: "horde-turn", // Verificando se existe penalidade de som para mover a horda
+  HORDE_CHECK: "horde-check", // Verificando se existe players próximos a horda
+  HORDE_FIGHT: "horde-fight", // Aguardando horda atacar players próximos
+  // ---------------------------------------------------------------
+  PLAYER_HEALTH_CHECK: "player-health-check", // Verificando saúde do player
+  // ---------------------------------------------------------------
+  NEXT_TURN_CHECK: "next-turn-check", // Verificando próximo jogador a jogar
+  // ----------------------------------------------------------------
 };
 
 const TURN = {
@@ -361,4 +391,5 @@ export const GAME = {
   CARDS,
   CARDS_TYPES,
   CARDS_ACTIONS,
+  TURN_STAGES,
 };
