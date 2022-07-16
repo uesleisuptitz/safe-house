@@ -36,7 +36,7 @@ export const BOARD = {
   l: BOARD_COLUMNS,
 };
 
-const STATUS = {
+const GAME_STATUS = {
   WAITING: "waiting", //esperando jogadores entrarem
   PLAYING: "playing", //jogando
   FINISHED: "finished", //jogo encerrado
@@ -79,8 +79,9 @@ const TURN_STAGES = {
   // ----------------------------------------------------------------
 };
 
-const TURN = {
+const TURN_USER = {
   ALL_USERS: "all_users", //Todos usuários
+  GAME: "game", //Todos usuários
 };
 
 const ZOMBIES = [
@@ -130,7 +131,7 @@ export const GAME_EXAMPLE = {
   maxUsers: 2,
   name: "Nome da sala",
   owner: "Nome do dono da sala",
-  status: STATUS.WAITING,
+  status: GAME_STATUS.WAITING,
   users: {
     1: {
       username: "Jogador 1",
@@ -384,10 +385,10 @@ const VEHICLES = {
 export const CARDS = { ITEMS, FIRE_GUNS, COLD_WEAPONS, VEHICLES };
 
 export const GAME = {
-  STATUS,
+  GAME_STATUS,
   ZOMBIES,
   ACTIONS,
-  TURN,
+  TURN_USER,
   CARDS,
   CARDS_TYPES,
   CARDS_ACTIONS,

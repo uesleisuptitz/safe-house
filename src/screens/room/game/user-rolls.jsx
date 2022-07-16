@@ -14,6 +14,8 @@ const UserRolls = ({ myUserId, room, roomId }) => {
   let myUser = users[myUserId];
   let rollingTime = 2000;
 
+  //-------------------ACTIONS FUNCTIONS
+
   const rollInitDice = useCallback(() => {
     setTimeout(() => {
       firebaseRollInitialDice(roomId, myUserId, rollValue).then(() =>
@@ -30,7 +32,11 @@ const UserRolls = ({ myUserId, room, roomId }) => {
     }, rollingTime);
   }, [roomId, rollValue, rollingTime]);
 
-  if (turn?.userId === GAME.TURN.ALL_USERS && !myUser?.initRollValue) {
+  //-------------------TESTS FUNCTIONS
+  const isInitialRollAndINeedRoll = () =>
+    turn?.userId === GAME.TURN_USER.ALL_USERS && !myUser?.initRollValue;
+
+  if (isInitialRollAndINeedRoll()) {
     return (
       <Modal>
         <label

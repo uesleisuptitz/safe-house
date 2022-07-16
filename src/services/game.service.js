@@ -17,16 +17,16 @@ export const firebaseGameRulesStart = (roomId) => {
       let { turn, users } = room;
       let usersArray = !users
         ? []
-        : Object.entries(users).map((array) => ({
-            id: array[0],
-            ...array[1],
-          }));
+        : Object.entries(users).map(([id, userData]) => ({ id, ...userData }));
       let turnUser = users && turn ? users[turn.userId] : false;
 
       //-------------------TESTS
       const gameIsInInitialRollAndAllUsersRolled = (action) =>
-        action === GAME.ACTIONS.ROLL_INIT &&
+        action === GAME.TURN_STAGES.ROLL_INIT &&
         usersArray.filter((user) => !user.initRollValue).length === 0;
+      const gameIsInGetInitialCards = (action) =>
+        action === GAME.TURN_STAGES.GET_INITIAL_CARDS;
+
       const playerMustMoveButDontHaveAvaliableCells = (
         action,
         avaliableMoviments,
@@ -42,6 +42,14 @@ export const firebaseGameRulesStart = (roomId) => {
       ) => action === GAME.ACTIONS.MOVE && avaliableMoviments === 0;
 
       //-------------------CHANGE GAME STATE FUNCTIONS
+      const startGiveCardsToPlayers = () => {
+        roomRef.update({
+          turn: {
+            userId: GAME.TURN_USER.GAME,
+            action: GAME.TURN_STAGES.GET_INITIAL_CARDS,
+          },
+        });
+      };
       const initializeNormalRollTurn = () => {
         let ordenedUsers = usersArray
           .sort((a, b) => b.initRollValue - a.initRollValue)
@@ -50,10 +58,9 @@ export const firebaseGameRulesStart = (roomId) => {
           usersSequence: ordenedUsers,
           turn: {
             userId: ordenedUsers[0],
-            action: GAME.ACTIONS.ROLL,
+            action: GAME.TURN_STAGES.MOVE_ROLL,
           },
         });
-        //[!]MOVE ACTIONS FUNCTIONS ARE IN user-rolls.jsx
       };
       const changeAvailableCellsToFirstLineCells = () => {
         turnRef.update({
@@ -91,11 +98,19 @@ export const firebaseGameRulesStart = (roomId) => {
           action: GAME.ACTIONS.ROLL,
         });
       };
+      const giveInitialCardsToPlayers = () => {
+        console.log("usersArray", usersArray);
+        // @todo
+        // sortear cartas para os players
+        // passar para o primeiro player rolar o movimento
+      };
 
       //-------------------RULES
       if (turn) {
         if (gameIsInInitialRollAndAllUsersRolled(turn.action)) {
-          initializeNormalRollTurn();
+          startGiveCardsToPlayers();
+        } else if (gameIsInGetInitialCards(turn.action)) {
+          giveInitialCardsToPlayers();
         } else if (
           playerMustMoveButDontHaveAvaliableCells(
             turn.action,
@@ -153,11 +168,11 @@ export const firebaseStartGame = (roomId) => {
   return new Promise((resolve, reject) => {
     try {
       var roomRef = db.ref(`rooms/${roomId}`);
-      roomRef.update({ status: GAME.STATUS.PLAYING });
+      roomRef.update({ status: GAME.GAME_STATUS.PLAYING });
       roomRef.update({
         turn: {
-          userId: GAME.TURN.ALL_USERS,
-          action: GAME.ACTIONS.ROLL_INIT,
+          userId: GAME.TURN_USER.ALL_USERS,
+          action: GAME.TURN_STAGES.ROLL_INIT,
         },
       });
       resolve();
@@ -213,7 +228,7 @@ export const firebaseWinGame = (roomId, userWinner) => {
   return new Promise((resolve, reject) => {
     try {
       var roomRef = db.ref(`rooms/${roomId}`);
-      roomRef.update({ status: GAME.STATUS.FINISHED, userWinner });
+      roomRef.update({ status: GAME.GAME_STATUS.FINISHED, userWinner });
       setTimeout(() => {
         roomRef.remove();
       }, 5000);
